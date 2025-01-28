@@ -1,11 +1,19 @@
 pipeline {
     agent any
     stages {
-        stage('Send Email') {
+        stage('Create File') {
             steps {
-                mail to: 'visweswar5555955@gmail.com',
-                     subject: 'Pipeline Success',
-                     body: 'The pipeline executed successfully!'
+                sh 'echo "This is a test file" > testfile.txt'
+            }
+        }
+        stage('Read File') {
+            steps {
+                sh 'cat testfile.txt'
+            }
+        }
+        stage('Delete File') {
+            steps {
+                sh 'rm testfile.txt'
             }
         }
     }
