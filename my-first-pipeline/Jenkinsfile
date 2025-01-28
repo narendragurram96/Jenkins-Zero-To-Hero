@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Test Docker') {
+        stage('Check PATH') {
             steps {
-                sh 'docker --version'
+                sh 'echo $PATH'
             }
         }
     }
