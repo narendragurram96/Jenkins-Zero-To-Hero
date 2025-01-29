@@ -1,27 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Pull Docker Image') {
+        stage('Clone Repository') {
             steps {
-                sh 'docker pull nginx:latest'
+                git url: 'https://github.com/visweswar5555955/Jenkins-Zero-To-Hero.git', branch: 'main'
             }
         }
-        stage('Run Docker Container') {
+        stage('List Files') {
             steps {
-                sh 'docker run -d --name nginx-test -p 8080:80 nginx:latest'
-            }
-        }
-        stage('List Running Containers') {
-            steps {
-                sh 'docker ps'
-            }
-        }
-        stage('Stop and Remove Container') {
-            steps {
-                sh '''
-                docker stop nginx-test
-                docker rm nginx-test
-                '''
+                sh 'ls -al'
             }
         }
     }
