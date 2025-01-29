@@ -1,19 +1,27 @@
 pipeline {
     agent any
     stages {
-        stage('Create File') {
+        stage('Pull Docker Image') {
             steps {
-                sh 'echo "This is a test file" > testfile.txt'
+                sh 'docker pull nginx:latest'
             }
         }
-        stage('Read File') {
+        stage('Run Docker Container') {
             steps {
-                sh 'cat testfile.txt'
+                sh 'docker run -d --name nginx-test -p 8080:80 nginx:latest'
             }
         }
-        stage('Delete File') {
+        stage('List Running Containers') {
             steps {
-                sh 'rm testfile.txt'
+                sh 'docker ps'
+            }
+        }
+        stage('Stop and Remove Container') {
+            steps {
+                sh '''
+                docker stop nginx-test
+                docker rm nginx-test
+                '''
             }
         }
     }
